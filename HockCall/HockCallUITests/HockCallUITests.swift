@@ -6,9 +6,6 @@ final class HockCallUITests: XCTestCase {
         continueAfterFailure = false
     }
 
-    override func tearDownWithError() throws {
-    }
-
     @MainActor
     func testLaunchPerformance() throws {
         measure(metrics: [XCTApplicationLaunchMetric()]) {
@@ -17,7 +14,7 @@ final class HockCallUITests: XCTestCase {
     }
 
     @MainActor
-    func testLoginScreenLoads() throws {
+    func testLoginScreenElementsExist() throws {
         let app = XCUIApplication()
         app.launch()
 
@@ -29,6 +26,12 @@ final class HockCallUITests: XCTestCase {
         XCTAssertTrue(app.buttons["createAccountButton"].exists)
         XCTAssertTrue(app.buttons["forgotPasswordButton"].exists)
         XCTAssertFalse(app.buttons["signInButton"].isEnabled)
+    }
+
+    @MainActor
+    func testLoginFlowEnablesButton() throws {
+        let app = XCUIApplication()
+        app.launch()
 
         let usernameField = app.textFields["usernameField"]
         let passwordField = app.secureTextFields["passwordField"]
@@ -36,9 +39,27 @@ final class HockCallUITests: XCTestCase {
 
         usernameField.tap()
         usernameField.typeText("hockpond")
+
         passwordField.tap()
         passwordField.typeText("123456")
+
         XCTAssertTrue(signInButton.isEnabled)
+    }
+
+    @MainActor
+    func testLoginFlowStateChanges() throws {
+        let app = XCUIApplication()
+        app.launch()
+
+        let usernameField = app.textFields["usernameField"]
+        let passwordField = app.secureTextFields["passwordField"]
+        let signInButton = app.buttons["signInButton"]
+
+        usernameField.tap()
+        usernameField.typeText("hockpond")
+
+        passwordField.tap()
+        passwordField.typeText("123456")
 
         signInButton.tap()
 
