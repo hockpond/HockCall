@@ -70,7 +70,7 @@ final class HockCallUITests: XCTestCase {
 
         sleep(3)
 
-        XCTAssertEqual(signInButton.label, "Sign Ind")
+        XCTAssertEqual(signInButton.label, "Sign In")
         XCTAssertTrue(signInButton.isEnabled)
         XCTAssertTrue(usernameField.isEnabled)
         XCTAssertTrue(passwordField.isEnabled)
