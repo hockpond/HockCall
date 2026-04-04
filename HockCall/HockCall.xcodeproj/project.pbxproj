@@ -24,9 +24,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7C6066A62F7F7D3B002308A3 /* HockCall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HockCall.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C6066B52F7F7D3D002308A3 /* HockCallTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HockCallTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		7C6066BF2F7F7D3D002308A3 /* HockCallUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HockCallUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C6066A62F7F7D3B002308A3 /* HockCall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = HockCall.app; path = "/Users/hockpond/Documents/HockCall/HockCall/build/Debug-iphoneos/HockCall.app"; sourceTree = "<absolute>"; };
+		7C6066B52F7F7D3D002308A3 /* HockCallTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = HockCallTests.xctest; path = "/Users/hockpond/Documents/HockCall/HockCall/build/Debug-iphoneos/HockCall.app/PlugIns/HockCallTests.xctest"; sourceTree = "<absolute>"; };
+		7C6066BF2F7F7D3D002308A3 /* HockCallUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = HockCallUITests.xctest; path = "/Users/hockpond/Documents/HockCall/HockCall/build/Debug-iphoneos/HockCallUITests-Runner.app/PlugIns/HockCallUITests.xctest"; sourceTree = "<absolute>"; };
+		7CD85B502F819177007FC72D /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
+		7CD85B512F819177007FC72D /* .swift-format */ = {isa = PBXFileReference; lastKnownFileType = text; path = ".swift-format"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -78,18 +80,9 @@
 				7C6066A82F7F7D3B002308A3 /* HockCall */,
 				7C6066B82F7F7D3D002308A3 /* HockCallTests */,
 				7C6066C22F7F7D3D002308A3 /* HockCallUITests */,
-				7C6066A72F7F7D3B002308A3 /* Products */,
+				7CD85B502F819177007FC72D /* .gitignore */,
+				7CD85B512F819177007FC72D /* .swift-format */,
 			);
-			sourceTree = "<group>";
-		};
-		7C6066A72F7F7D3B002308A3 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				7C6066A62F7F7D3B002308A3 /* HockCall.app */,
-				7C6066B52F7F7D3D002308A3 /* HockCallTests.xctest */,
-				7C6066BF2F7F7D3D002308A3 /* HockCallUITests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -196,7 +189,7 @@
 			mainGroup = 7C60669D2F7F7D3B002308A3;
 			minimizedProjectReferenceProxies = 1;
 			preferredProjectObjectVersion = 77;
-			productRefGroup = 7C6066A72F7F7D3B002308A3 /* Products */;
+			productRefGroup = 7C60669D2F7F7D3B002308A3;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (

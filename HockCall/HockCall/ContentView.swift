@@ -6,7 +6,7 @@ struct ContentView: View {
     @State private var isLoading: Bool = false
     @State private var rememberMe: Bool = false
     @State private var signInAutomatically: Bool = false
-    
+
     var body: some View {
         VStack {
             HStack {
@@ -14,12 +14,12 @@ struct ContentView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 75, height: 75)
-                
+
                 VStack(alignment: .leading) {
                     Text("RaidCall")
                         .font(.largeTitle)
                         .bold()
-                    
+
                     Text("The Inner Voice")
                         .font(.subheadline)
                         .tracking(1.7)
@@ -37,7 +37,7 @@ struct ContentView: View {
                     endPoint: .bottom,
                 )
             )
-            
+
             VStack {
                 VStack(alignment: .leading) {
                     Text("Username")
@@ -56,7 +56,7 @@ struct ContentView: View {
                         .disabled(isLoading)
                         .accessibilityIdentifier("usernameField")
                 }
-                
+
                 VStack(alignment: .leading) {
                     Text("Password")
                         .font(.system(size: 19))
@@ -73,7 +73,7 @@ struct ContentView: View {
                         .disabled(isLoading)
                         .accessibilityIdentifier("passwordField")
                 }
-                
+
                 VStack(alignment: .leading, spacing: 9) {
                     Button {
                         rememberMe.toggle()
@@ -87,7 +87,7 @@ struct ContentView: View {
                     .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("rememberMeButton")
-                    
+
                     Button {
                         signInAutomatically.toggle()
                     } label: {
@@ -104,7 +104,7 @@ struct ContentView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 15)
                 .padding(.bottom, 30)
-                
+
                 Button {
                     Task {
                         await signIn()
@@ -115,7 +115,7 @@ struct ContentView: View {
                             ProgressView()
                                 .tint(.gray)
                         }
-                        
+
                         Text(isLoading ? "Signing In..." : "Sign In")
                             .font(.system(size: 23))
                             .bold()
@@ -128,15 +128,15 @@ struct ContentView: View {
                 .buttonBorderShape(.roundedRectangle(radius: 6))
                 .disabled(username.isEmpty || password.isEmpty || isLoading)
                 .accessibilityIdentifier("signInButton")
-                
+
             }
             .frame(maxWidth: 360)
             .padding(.horizontal, 30)
-            
+
             VStack {
                 Spacer()
 
-                HStack (spacing: 10) {
+                HStack(spacing: 10) {
                     Button {
 
                     } label: {
@@ -148,7 +148,7 @@ struct ContentView: View {
                     }
                     .buttonStyle(.plain)
                     .accessibilityIdentifier("createAccountButton")
-                    
+
                     Button {
 
                     } label: {
@@ -174,12 +174,12 @@ struct ContentView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
     }
-    
+
     private func signIn() async {
         isLoading = true
-        
+
         try? await Task.sleep(for: .seconds(2))
-        
+
         isLoading = false
     }
 }
