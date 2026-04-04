@@ -12,6 +12,7 @@ jobs:
   analyze:
     name: Analyze Swift
     runs-on: macos-latest
+
     permissions:
       actions: read
       contents: read
@@ -34,9 +35,10 @@ jobs:
       - name: Build app
         run: |
           xcodebuild \
-            -project ./HockCall.xcodeproj \
+            -project ./HockCall/HockCall.xcodeproj \
             -scheme HockCall \
             -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -derivedDataPath build \
             build
 
       - name: Analyze
