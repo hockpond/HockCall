@@ -8,9 +8,9 @@ final class HockCallUITests: XCTestCase {
 
     @MainActor
     func testLaunchPerformance() throws {
-        // measure(metrics: [XCTApplicationLaunchMetric()]) {
-        //     XCUIApplication().launch()
-        // }
+        measure(metrics: [XCTApplicationLaunchMetric()]) {
+            XCUIApplication().launch()
+        }
     }
 
     @MainActor
