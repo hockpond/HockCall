@@ -12,6 +12,7 @@ jobs:
   quality-security:
     name: Lint Test And Analyze
     runs-on: macos-latest
+
     permissions:
       actions: read
       contents: read
@@ -20,6 +21,14 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+
+      - name: Cache DerivedData
+        uses: actions/cache@v4
+        with:
+          path: HockCall/build
+          key: ${{ runner.os }}-deriveddata-${{ hashFiles('**/*.xcodeproj/project.pbxproj') }}
+          restore-keys: |
+            ${{ runner.os }}-deriveddata-
 
       - name: Run swift-format
         run: |
@@ -39,7 +48,12 @@ jobs:
         with:
           languages: swift
 
-      - name: Run tests
+      - name: Boot simulator
+        run: |
+          xcrun simctl boot "iPhone 16" || true
+          xcrun simctl bootstatus "iPhone 16" -b
+
+      - name: Run tests (UI + unit)
         run: |
           cd HockCall
           xcodebuild \
@@ -47,6 +61,7 @@ jobs:
             -scheme HockCall \
             -destination 'platform=iOS Simulator,name=iPhone 16' \
             -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
             test
 
       - name: Analyze
