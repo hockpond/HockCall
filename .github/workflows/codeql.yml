@@ -12,6 +12,7 @@ jobs:
   analyze:
     name: Analyze Swift
     runs-on: macos-latest
+
     permissions:
       actions: read
       contents: read
@@ -26,17 +27,14 @@ jobs:
         with:
           languages: swift
 
-      - name: Show repository layout
-        run: |
-          pwd
-          find . -maxdepth 2 -print
-
       - name: Build app
         run: |
+          cd HockCall
           xcodebuild \
-            -project ./HockCall.xcodeproj \
+            -project HockCall.xcodeproj \
             -scheme HockCall \
             -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -derivedDataPath build \
             build
 
       - name: Analyze
