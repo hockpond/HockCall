@@ -30,8 +30,13 @@ jobs:
         with:
           languages: ${{ matrix.language }}
 
-      - name: Autobuild
-        uses: github/codeql-action/autobuild@v4
+      - name: Build app
+        run: |
+          xcodebuild \
+            -project HockCall.xcodeproj \
+            -scheme HockCall \
+            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            build
 
       - name: Analyze
         uses: github/codeql-action/analyze@v4
