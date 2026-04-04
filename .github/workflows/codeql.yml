@@ -12,6 +12,7 @@ jobs:
   analyze:
     name: Analyze Swift
     runs-on: macos-latest
+
     permissions:
       actions: read
       contents: read
@@ -26,17 +27,23 @@ jobs:
         with:
           languages: swift
 
-      - name: Show repository layout
-        run: |
-          pwd
-          find . -maxdepth 2 -print
+      - name: Cache DerivedData
+        uses: actions/cache@v4
+        with:
+          path: HockCall/build
+          key: ${{ runner.os }}-deriveddata-${{ hashFiles('**/*.xcodeproj/project.pbxproj') }}
+          restore-keys: |
+            ${{ runner.os }}-deriveddata-
 
       - name: Build app
         run: |
+          cd HockCall
           xcodebuild \
-            -project ./HockCall.xcodeproj \
+            -project HockCall.xcodeproj \
             -scheme HockCall \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -destination 'generic/platform=iOS' \
+            -derivedDataPath build \
+            CODE_SIGNING_ALLOWED=NO \
             build
 
       - name: Analyze

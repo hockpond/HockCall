@@ -1,4 +1,4 @@
-name: CodeQL
+name: Quality And Security
 
 on:
   push:
@@ -9,10 +9,9 @@ on:
     - cron: '0 6 * * 1'
 
 jobs:
-  analyze:
-    name: Analyze Swift
+  quality-security:
+    name: Lint Test And Analyze
     runs-on: macos-latest
-
     permissions:
       actions: read
       contents: read
@@ -22,12 +21,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Run swift-format
+        run: |
+          cd HockCall
+          swift format lint -r .
+
+      - name: Install SwiftLint
+        run: brew install swiftlint
+
+      - name: Run SwiftLint
+        run: |
+          cd HockCall
+          swiftlint
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v4
         with:
           languages: swift
 
-      - name: Build app
+      - name: Run tests
         run: |
           cd HockCall
           xcodebuild \
@@ -35,7 +47,7 @@ jobs:
             -scheme HockCall \
             -destination 'platform=iOS Simulator,name=iPhone 16' \
             -derivedDataPath build \
-            build
+            test
 
       - name: Analyze
         uses: github/codeql-action/analyze@v4
