@@ -54,6 +54,7 @@ struct ContentView: View {
                         .autocorrectionDisabled(true)
                         .textInputAutocapitalization(.never)
                         .disabled(isLoading)
+                        .accessibilityIdentifier("usernameField")
                 }
                 
                 VStack(alignment: .leading) {
@@ -70,6 +71,7 @@ struct ContentView: View {
                                 .stroke(.gray.opacity(0.7), lineWidth: 1)
                         )
                         .disabled(isLoading)
+                        .accessibilityIdentifier("passwordField")
                 }
                 
                 VStack(alignment: .leading, spacing: 9) {
@@ -84,6 +86,7 @@ struct ContentView: View {
                     }
                     .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("rememberMeButton")
                     
                     Button {
                         signInAutomatically.toggle()
@@ -96,6 +99,7 @@ struct ContentView: View {
                     }
                     .foregroundColor(Color(red: 0.4, green: 0.4, blue: 0.4))
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("signInAutomaticallyButton")
                 }
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 15)
@@ -112,16 +116,18 @@ struct ContentView: View {
                                 .tint(.gray)
                         }
                         
-                        Text(isLoading ? "Signing In..." : "Sign in")
+                        Text(isLoading ? "Signing In..." : "Sign In")
                             .font(.system(size: 23))
                             .bold()
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 13)
+                            .accessibilityIdentifier("signInButtonLabel")
                     }
                 }
                 .buttonStyle(.borderedProminent)
                 .buttonBorderShape(.roundedRectangle(radius: 6))
                 .disabled(username.isEmpty || password.isEmpty || isLoading)
+                .accessibilityIdentifier("signInButton")
                 
             }
             .frame(maxWidth: 360)
@@ -141,6 +147,7 @@ struct ContentView: View {
                         }
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("createAccountButton")
                     
                     Button {
 
@@ -152,6 +159,7 @@ struct ContentView: View {
                         }
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier("forgotPasswordButton")
                 }
                 .frame(maxWidth: .infinity)
                 .padding(.vertical, 6)
