@@ -29,9 +29,46 @@
 		7C8F48652F81B58D00DBB89C /* HockCallUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HockCallUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7C1935572F81F36D006AEC3E /* Exceptions for "HockCall" folder in "HockCall" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Components/AppHeaderView.swift,
+				Components/AppPrimaryButton.swift,
+				Components/AppTextInputField.swift,
+				Components/FieldLabel.swift,
+				ContentView.swift,
+				HockCallApp.swift,
+				Pages/CreateAccountView.swift,
+				Pages/LoginView.swift,
+			);
+			target = 7C6066A52F7F7D3B002308A3 /* HockCall */;
+		};
+		7C1935582F81F36D006AEC3E /* Exceptions for "HockCall" folder in "HockCallUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Components/AppHeaderView.swift,
+				Components/AppPrimaryButton.swift,
+				Components/AppTextInputField.swift,
+				Components/FieldLabel.swift,
+				ContentView.swift,
+				HockCallApp.swift,
+				Pages/CreateAccountView.swift,
+				Pages/LoginView.swift,
+			);
+			target = 7C6066BE2F7F7D3D002308A3 /* HockCallUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		7C19354D2F81F36C006AEC3E /* HockCall */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7C1935572F81F36D006AEC3E /* Exceptions for "HockCall" folder in "HockCall" target */,
+				7C1935582F81F36D006AEC3E /* Exceptions for "HockCall" folder in "HockCallUITests" target */,
+			);
 			path = HockCall;
 			sourceTree = "<group>";
 		};
@@ -146,6 +183,7 @@
 				7C6066C12F7F7D3D002308A3 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				7C19354D2F81F36C006AEC3E /* HockCall */,
 				7C6066C22F7F7D3D002308A3 /* HockCallUITests */,
 			);
 			name = HockCallUITests;
