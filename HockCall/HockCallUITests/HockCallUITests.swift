@@ -99,40 +99,86 @@ final class HockCallUITests: XCTestCase {
 
         fillCreateAccountForm(in: app, email: "user@example.com")
 
-        XCTAssertTrue(app.buttons["createAccountSubmitButton"].isEnabled)
+        let createAccountButton = app.buttons["createAccountSubmitButton"]
+        waitFor { createAccountButton.isEnabled }
+        XCTAssertTrue(createAccountButton.isEnabled)
     }
 
     @MainActor
-    func testCreateAccountLoadingStateChanges() throws {
+    func testCreateAccountMismatchedPasswordsKeepsSubmitDisabled() throws {
         let app = launchAndOpenCreateAccountView()
 
-        fillCreateAccountForm(in: app, email: "user@example.com")
-
-        let emailField = app.textFields["createAccountEmailField"]
-        let usernameField = app.textFields["createAccountUsernameField"]
-        let passwordField = app.secureTextFields["createAccountPasswordField"]
-        let confirmPasswordField = app.secureTextFields["createAccountConfirmPasswordField"]
         let createAccountButton = app.buttons["createAccountSubmitButton"]
 
+        fillCreateAccountForm(
+            in: app,
+            email: "user@example.com",
+            username: "hockpond",
+            password: "123456",
+            confirmPassword: "654321"
+        )
+
+        XCTAssertFalse(createAccountButton.isEnabled)
+    }
+
+    @MainActor
+    func testCreateAccountSuccessfulSubmissionReturnsToLoginView() throws {
+        let app = launchAndOpenCreateAccountView()
+        let createAccountButton = app.buttons["createAccountSubmitButton"]
+
+        fillCreateAccountForm(
+            in: app,
+            email: "user@example.com",
+            username: "hockpond",
+            password: "123456",
+            confirmPassword: "123456"
+        )
+
+        waitFor { createAccountButton.isEnabled }
         createAccountButton.tap()
 
-        XCTAssertEqual(createAccountButton.label, "Creating Account...")
-        XCTAssertFalse(createAccountButton.isEnabled)
-        XCTAssertFalse(emailField.isEnabled)
-        XCTAssertFalse(usernameField.isEnabled)
-        XCTAssertFalse(passwordField.isEnabled)
-        XCTAssertFalse(confirmPasswordField.isEnabled)
+        XCTAssertTrue(app.textFields["usernameField"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.otherElements["createAccountView"].exists)
+    }
 
-        waitFor {
-            createAccountButton.label == "Create Account"
-        }
+    @MainActor
+    func testCreateAccountDuplicateShowsErrorAndClearsWhenEditing() throws {
+        let app = launchAndOpenCreateAccountView()
+        let createAccountButton = app.buttons["createAccountSubmitButton"]
 
-        XCTAssertEqual(createAccountButton.label, "Create Account")
-        XCTAssertTrue(createAccountButton.isEnabled)
-        XCTAssertTrue(emailField.isEnabled)
-        XCTAssertTrue(usernameField.isEnabled)
-        XCTAssertTrue(passwordField.isEnabled)
-        XCTAssertTrue(confirmPasswordField.isEnabled)
+        fillCreateAccountForm(
+            in: app,
+            email: "duplicate@example.com",
+            username: "hockpond",
+            password: "123456",
+            confirmPassword: "123456"
+        )
+
+        waitFor { createAccountButton.isEnabled }
+        createAccountButton.tap()
+        XCTAssertTrue(app.textFields["usernameField"].waitForExistence(timeout: 5))
+
+        app.buttons["createAccountButton"].tap()
+        fillCreateAccountForm(
+            in: app,
+            email: "duplicate@example.com",
+            username: "hockpond",
+            password: "123456",
+            confirmPassword: "123456"
+        )
+
+        waitFor { createAccountButton.isEnabled }
+        createAccountButton.tap()
+
+        let errorMessage = app.staticTexts["createAccountErrorMessage"]
+        XCTAssertTrue(errorMessage.waitForExistence(timeout: 5))
+        XCTAssertEqual(errorMessage.label, "An account with that email or username already exists.")
+
+        let usernameField = app.textFields["createAccountUsernameField"]
+        usernameField.tap()
+        usernameField.typeText("2")
+
+        XCTAssertTrue(errorMessage.waitForNonExistence(timeout: 5))
     }
 
     @MainActor
@@ -192,23 +238,38 @@ final class HockCallUITests: XCTestCase {
     }
 
     @MainActor
-    private func fillCreateAccountForm(in app: XCUIApplication, email: String) {
+    private func fillCreateAccountForm(
+        in app: XCUIApplication,
+        email: String,
+        username: String = "hockpond",
+        password: String = "123456",
+        confirmPassword: String = "123456"
+    ) {
         let emailField = app.textFields["createAccountEmailField"]
         let usernameField = app.textFields["createAccountUsernameField"]
         let passwordField = app.secureTextFields["createAccountPasswordField"]
         let confirmPasswordField = app.secureTextFields["createAccountConfirmPasswordField"]
+        let createAccountButton = app.buttons["createAccountSubmitButton"]
 
         emailField.tap()
         emailField.typeText(email)
 
         usernameField.tap()
-        usernameField.typeText("hockpond")
+        usernameField.typeText(username)
 
-        passwordField.tap()
-        passwordField.typeText("123456")
+        enterSecureText(password, into: passwordField)
+        enterSecureText(confirmPassword, into: confirmPasswordField)
 
-        confirmPasswordField.tap()
-        confirmPasswordField.typeText("123456")
+        if !createAccountButton.isEnabled && password == confirmPassword {
+            enterSecureText(password, into: passwordField)
+            enterSecureText(confirmPassword, into: confirmPasswordField)
+        }
+    }
+
+    @MainActor
+    private func enterSecureText(_ text: String, into field: XCUIElement) {
+        field.tap()
+        field.typeText(text)
     }
 
     @MainActor

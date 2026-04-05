@@ -1,14 +1,37 @@
+import CryptoKit
+import SwiftData
 import SwiftUI
 
 struct CreateAccountView: View {
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.modelContext) private var modelContext
     @State private var email: String = ""
     @State private var username: String = ""
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
     @State private var isLoading: Bool = false
+    @State private var errorMessage: String?
+
+    private var trimmedEmail: String {
+        email.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
+    private var trimmedUsername: String {
+        username.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
+
     private var isCreateAccountButtonDisabled: Bool {
-        email.isEmpty || !isEmailValid || username.isEmpty || password.isEmpty || confirmPassword.isEmpty || isLoading
+        trimmedEmail.isEmpty
+            || !isEmailValid
+            || trimmedUsername.isEmpty
+            || password.isEmpty
+            || confirmPassword.isEmpty
+            || password != confirmPassword
+            || isLoading
+    }
+
+    private var formInputSignature: String {
+        "\(email)|\(username)|\(password)|\(confirmPassword)"
     }
 
     var body: some View {
@@ -40,6 +63,7 @@ struct CreateAccountView: View {
                             text: $password,
                             isSecure: true,
                             isDisabled: isLoading,
+                            textContentType: .newPassword,
                             accessibilityIdentifier: "createAccountPasswordField"
                         )
                         AppTextInputField(
@@ -48,8 +72,16 @@ struct CreateAccountView: View {
                             text: $confirmPassword,
                             isSecure: true,
                             isDisabled: isLoading,
+                            textContentType: .newPassword,
                             accessibilityIdentifier: "createAccountConfirmPasswordField"
                         )
+                    }
+
+                    if let errorMessage {
+                        Text(errorMessage)
+                            .font(.system(size: 15))
+                            .foregroundStyle(.red)
+                            .accessibilityIdentifier("createAccountErrorMessage")
                     }
 
                     AppPrimaryButton(
@@ -57,7 +89,7 @@ struct CreateAccountView: View {
                         accessibilityIdentifier: "createAccountSubmitButton",
                         action: {
                             Task {
-                                await createAccount()
+                                createAccount()
                             }
                         },
                         label: {
@@ -93,20 +125,68 @@ struct CreateAccountView: View {
         }
         .navigationBarBackButtonHidden(true)
         .toolbar(.hidden, for: .navigationBar)
+        .onChange(of: formInputSignature) { _, _ in
+            errorMessage = nil
+        }
         .accessibilityIdentifier("createAccountView")
     }
 
     private var isEmailValid: Bool {
         let emailRegex = "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
-        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: email)
+        return NSPredicate(format: "SELF MATCHES %@", emailRegex).evaluate(with: trimmedEmail)
     }
 
-    private func createAccount() async {
+    private func createAccount() {
         isLoading = true
+        errorMessage = nil
 
-        try? await Task.sleep(for: .seconds(2))
+        let email = trimmedEmail
+        let username = trimmedUsername
 
-        isLoading = false
+        self.email = email
+        self.username = username
+
+        guard isEmailValid else {
+            errorMessage = "Enter a valid email address."
+            isLoading = false
+            return
+        }
+        guard password == confirmPassword else {
+            errorMessage = "Passwords do not match."
+            isLoading = false
+            return
+        }
+
+        let descriptor = FetchDescriptor<User>(
+            predicate: #Predicate<User> {
+                $0.email == email || $0.username == username
+            }
+        )
+
+        do {
+            let existingUsers = try modelContext.fetch(descriptor)
+            if !existingUsers.isEmpty {
+                errorMessage = "An account with that email or username already exists."
+                isLoading = false
+                return
+            }
+
+            let passwordHash = hashPassword(password)
+            let user = User(email: email, username: username, passwordHash: passwordHash)
+            modelContext.insert(user)
+            try modelContext.save()
+
+            isLoading = false
+            dismiss()
+        } catch {
+            errorMessage = "Unable to create account right now. Please try again."
+            isLoading = false
+        }
+    }
+
+    private func hashPassword(_ password: String) -> String {
+        let digest = SHA256.hash(data: Data(password.utf8))
+        return digest.map { String(format: "%02x", $0) }.joined()
     }
 
 }

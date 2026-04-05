@@ -17,6 +17,8 @@ struct AppTextInputField: View {
             Group {
                 if isSecure {
                     SecureField(placeholder, text: $text)
+                        .autocorrectionDisabled(true)
+                        .textInputAutocapitalization(.never)
                         .textContentType(textContentType)
                 } else {
                     TextField(placeholder, text: $text)
