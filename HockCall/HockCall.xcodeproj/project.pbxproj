@@ -24,14 +24,51 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		7C4EC0CB2F819DF30061D06D /* HockCall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = HockCall.app; path = "/Users/hockpond/Documents/HockCall/HockCall/build/Debug-iphoneos/HockCall.app"; sourceTree = "<absolute>"; };
-		7C4EC0CC2F819DF30061D06D /* HockCallTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = HockCallTests.xctest; path = "/Users/hockpond/Documents/HockCall/HockCall/build/Debug-iphoneos/HockCall.app/PlugIns/HockCallTests.xctest"; sourceTree = "<absolute>"; };
-		7C4EC0CD2F819DF30061D06D /* HockCallUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = HockCallUITests.xctest; path = "/Users/hockpond/Documents/HockCall/HockCall/build/Debug-iphoneos/HockCallUITests-Runner.app/PlugIns/HockCallUITests.xctest"; sourceTree = "<absolute>"; };
+		7C8F48632F81B58D00DBB89C /* HockCall.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HockCall.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C8F48642F81B58D00DBB89C /* HockCallTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HockCallTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		7C8F48652F81B58D00DBB89C /* HockCallUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HockCallUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		7C1935572F81F36D006AEC3E /* Exceptions for "HockCall" folder in "HockCall" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Components/AppHeaderView.swift,
+				Components/AppPrimaryButton.swift,
+				Components/AppTextInputField.swift,
+				Components/FieldLabel.swift,
+				ContentView.swift,
+				HockCallApp.swift,
+				Pages/CreateAccountView.swift,
+				Pages/LoginView.swift,
+			);
+			target = 7C6066A52F7F7D3B002308A3 /* HockCall */;
+		};
+		7C1935582F81F36D006AEC3E /* Exceptions for "HockCall" folder in "HockCallUITests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Assets.xcassets,
+				Components/AppHeaderView.swift,
+				Components/AppPrimaryButton.swift,
+				Components/AppTextInputField.swift,
+				Components/FieldLabel.swift,
+				ContentView.swift,
+				HockCallApp.swift,
+				Pages/CreateAccountView.swift,
+				Pages/LoginView.swift,
+			);
+			target = 7C6066BE2F7F7D3D002308A3 /* HockCallUITests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		7C6066A82F7F7D3B002308A3 /* HockCall */ = {
+		7C19354D2F81F36C006AEC3E /* HockCall */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				7C1935572F81F36D006AEC3E /* Exceptions for "HockCall" folder in "HockCall" target */,
+				7C1935582F81F36D006AEC3E /* Exceptions for "HockCall" folder in "HockCallUITests" target */,
+			);
 			path = HockCall;
 			sourceTree = "<group>";
 		};
@@ -75,9 +112,12 @@
 		7C60669D2F7F7D3B002308A3 = {
 			isa = PBXGroup;
 			children = (
-				7C6066A82F7F7D3B002308A3 /* HockCall */,
 				7C6066B82F7F7D3D002308A3 /* HockCallTests */,
 				7C6066C22F7F7D3D002308A3 /* HockCallUITests */,
+				7C19354D2F81F36C006AEC3E /* HockCall */,
+				7C8F48632F81B58D00DBB89C /* HockCall.app */,
+				7C8F48652F81B58D00DBB89C /* HockCallUITests.xctest */,
+				7C8F48642F81B58D00DBB89C /* HockCallTests.xctest */,
 			);
 			sourceTree = "<group>";
 		};
@@ -96,14 +136,11 @@
 			);
 			dependencies = (
 			);
-			fileSystemSynchronizedGroups = (
-				7C6066A82F7F7D3B002308A3 /* HockCall */,
-			);
 			name = HockCall;
 			packageProductDependencies = (
 			);
 			productName = HockCall;
-			productReference = 7C4EC0CB2F819DF30061D06D /* HockCall.app */;
+			productReference = 7C8F48632F81B58D00DBB89C /* HockCall.app */;
 			productType = "com.apple.product-type.application";
 		};
 		7C6066B42F7F7D3D002308A3 /* HockCallTests */ = {
@@ -126,7 +163,7 @@
 			packageProductDependencies = (
 			);
 			productName = HockCallTests;
-			productReference = 7C4EC0CC2F819DF30061D06D /* HockCallTests.xctest */;
+			productReference = 7C8F48642F81B58D00DBB89C /* HockCallTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
 		7C6066BE2F7F7D3D002308A3 /* HockCallUITests */ = {
@@ -143,13 +180,14 @@
 				7C6066C12F7F7D3D002308A3 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
+				7C19354D2F81F36C006AEC3E /* HockCall */,
 				7C6066C22F7F7D3D002308A3 /* HockCallUITests */,
 			);
 			name = HockCallUITests;
 			packageProductDependencies = (
 			);
 			productName = HockCallUITests;
-			productReference = 7C4EC0CD2F819DF30061D06D /* HockCallUITests.xctest */;
+			productReference = 7C8F48652F81B58D00DBB89C /* HockCallUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
