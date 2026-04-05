@@ -34,14 +34,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
-				Components/AppHeaderView.swift,
-				Components/AppPrimaryButton.swift,
-				Components/AppTextInputField.swift,
-				Components/FieldLabel.swift,
-				ContentView.swift,
-				HockCallApp.swift,
-				Pages/CreateAccountView.swift,
-				Pages/LoginView.swift,
 			);
 			target = 7C6066A52F7F7D3B002308A3 /* HockCall */;
 		};
@@ -49,14 +41,6 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Assets.xcassets,
-				Components/AppHeaderView.swift,
-				Components/AppPrimaryButton.swift,
-				Components/AppTextInputField.swift,
-				Components/FieldLabel.swift,
-				ContentView.swift,
-				HockCallApp.swift,
-				Pages/CreateAccountView.swift,
-				Pages/LoginView.swift,
 			);
 			target = 7C6066BE2F7F7D3D002308A3 /* HockCallUITests */;
 		};
